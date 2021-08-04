@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>register</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        
+        <br><a href="index.html" target="new"> Home</a>
+        
+        <!--Use POST! GET is not safe-->
+        
+        <form method="GET">
+            First Name: <input type="text" required name="firstname"><br>
+            Last Name: <input type="text" required name="lastname"><br>
+            Email: <input type="email" required name="email"><br>
+            Password: <input type="password" required min="8" name="password"><br>
+            Birthday: <input type="date" name="Birthday"><br>
+            Gender: <input type="radio" name="gender" value="male"> Male  
+                    <input type="radio" name="gender" value="female"> Female 
+                    <input type="radio" name="gender" value="other"> Other <br>
+            Cars: <br>
+            <select name="cars">
+                <option value="benz" name="benz">Benz</option>
+                <option value="audi" name="audi">Audi</option>
+                <option value="bmw" name="bmw">BMW</option>
+            </select><br><br>
+            <input type="submit">
+            <input type="reset">
+
+        </form>
+    </body>
+</html>

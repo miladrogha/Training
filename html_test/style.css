@@ -1,0 +1,33 @@
+/* Selector{
+    Property: value;
+}*/
+
+header{
+    background-color:grey;
+    opacity: 50;
+    color:beige;
+}
+body {
+    background-color:oldlace ;
+    background-size: cover;
+
+}
+a {
+    color:beige;
+    font-size: large;
+}
+h2{
+    color:whitesmoke;
+    text-align: center;
+    cursor: grab;
+}
+
+p{
+    color:slategrey;
+    text-align: left;
+}
+
+li{
+    list-style: none;
+    display: inline-block;
+}
