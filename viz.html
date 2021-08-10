@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DataViz</title>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+        <meta charset="utf-8" />
+        <style media="screen">
+            /* Add space between Vega-Embed links  */
+            .vega-actions a {
+              margin-right: 5px;
+            }
+          </style>
+    </head>
+    
+    <body>
+        <div id = "vis"></div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam eveniet, harum id soluta beatae consequuntur asperiores perferendis adipisci nobis consectetur at, eum mollitia blanditiis sequi commodi, perspiciatis explicabo rem minus.</p>
+        
+        <br>
+        <script>
+            var vlSpec = {
+                $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+                data: {
+                  url: "https://raw.githubusercontent.com/nytimes/covid-19-data/e371d1b40449e2b2916955e443ab75fbc235a828/us-states.csv"
+                },
+                mark: 'bar',
+                encoding: {
+                  x: {field: 'state', type: 'nominal'},
+                  y: {
+                    aggregate: 'average',
+                    field: 'deaths',
+                    type: 'quantitative',
+                    axis: {
+                      title: 'Average of deaths'
+                    }
+                  }
+                }
+            };
+          
+            // Embed the visualization in the container with id `vis`
+            vegaEmbed('#vis', vlSpec);
+        </script>
+    </body>
+</html>
