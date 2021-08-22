@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Simple Bar Chart</title>
+
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+<script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+<meta charset="utf-8" />
+<style media="screen">
+    /* Add space between Vega-Embed links  */
+    .vega-actions a {
+      margin-right: 5px;
+    }
+    </style>
+    </head>
+    <body>
+
+    <h1>Single Bar Chart</h1>
+    <p>A single bar chart using Vega-Lite:</p>
+    <br>
+    <!-- the chart will be added to this div element -->
+    <div id = "vis"></div>
+    <script>
+        var vlSpec ={
+            $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+            align: "center",
+            width: 1000,
+            data:{
+                url: "https://raw.githubusercontent.com/vega/vega/master/docs/data/seattle-weather.csv",
+                async: true
+            },
+            layer:[
+            {
+                mark: {
+                    type: "bar",
+                    tooltip: true,
+                    color: "#7a7a7a",
+                    opacity: .2
+                },
+                encoding:{
+                    x: {
+                        timeUnit: "month",
+                        field: "date",
+                        type: "ordinal"
+                    },
+                    y: {
+                        field: "precipitation",
+                        type: "quantitative",
+                        aggregate: "mean"
+                        }
+                    }
+            },
+            {
+                mark: {
+                    type: "line",
+                    tooltip: true,
+                    color: "red",
+                    opacity: .6
+                },
+                encoding:{
+                    x: {
+                        timeUnit: "month",
+                        field: "date",
+                        type: "ordinal"
+                    },
+                    y: {
+                        field: "temp_max",
+                        type: "quantitative",
+                        aggregate: "mean"
+                        }            
+                    }
+            },
+            {
+                mark: {
+                    type: "line",
+                    point: true,
+                    tooltip: {content:"data"},
+                    color: "blue",
+                    opacity: .6
+                },
+                encoding:{
+                    x: {
+                        timeUnit: "month",
+                        field: "date",
+                        type: "ordinal"
+                    },
+                    y: {
+                        field: "temp_min",
+                        type: "quantitative",
+                        aggregate: "mean"
+                        }            
+                    }
+            }
+            ]
+    }
+        vegaEmbed('#vis', vlSpec);    
+    </script>
+    </body>
+</html>

@@ -3,6 +3,7 @@
     <head>
         <title>DataViz</title>
         <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
         <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
         <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
@@ -16,29 +17,64 @@
     </head>
     
     <body>
-        <div id = "vis"></div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam eveniet, harum id soluta beatae consequuntur asperiores perferendis adipisci nobis consectetur at, eum mollitia blanditiis sequi commodi, perspiciatis explicabo rem minus.</p>
+      <div id="userIn">
+        <select name="states">
+          <option value="stateName">Benz</option>
+        </select>
+      </div>
+      <div id = "vis"></div>
+        <p style="font-family:'Arial'">Source: <a href="https://github.com/nytimes/covid-19-data"> New York Times</a></p>
         
         <br>
         <script>
             var vlSpec = {
-                $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-                data: {
-                  url: "https://raw.githubusercontent.com/nytimes/covid-19-data/e371d1b40449e2b2916955e443ab75fbc235a828/us-states.csv"
+              $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+              width: (980/3),
+              data: {
+                name: "covidUsStates",
+                url: "https://raw.githubusercontent.com/nytimes/covid-19-data/e371d1b40449e2b2916955e443ab75fbc235a828/us-states.csv"},
+              mark:"bar",
+              encoding: {
+                facet: {
+                  columns: 3,
+                  field: "state",
+                  spacing: 50,
+                  sort: {op: "average", field: "deaths", order:"descending"}
                 },
-                mark: 'bar',
-                encoding: {
-                  x: {field: 'state', type: 'nominal'},
-                  y: {
-                    aggregate: 'average',
-                    field: 'deaths',
-                    type: 'quantitative',
-                    axis: {
-                      title: 'Average of deaths'
-                    }
+                x: {
+                field:"date",
+                type: "temporal",
+                title: "Date",
+                scale:{
+                  type: "time"
+                  }
+                },
+                
+                y: {
+                    aggregate:"sum",
+                    type: "quantitative",
+                    field: "deaths",
+                    title: "Total number of deaths"
+                  },
+                tooltip: [
+                  {field: "state", type: "ordinal", title: "State"},
+                  {field: "cases", type: "quantitative", title: "cases"},
+                  {field: "deaths", type: "quantitative", title: "deaths"}
+                ],
+                color:{
+                  field: "deaths",
+                  type:"quantitative",
+                  scale:{
+                    type: "linear",
+                    range:["#6BC4FF","#ffc96b","#ff6b6b"],
+                    domainMin:0,
+                    domainMid:30000,
+                    clamp:true,
                   }
                 }
-            };
+              }
+            }
+            ;
           
             // Embed the visualization in the container with id `vis`
             vegaEmbed('#vis', vlSpec);

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Live Covid Data Visualization</title>
+
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+<script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+<meta charset="utf-8" />
+<style media="screen">
+    /* Add space between Vega-Embed links  */
+    .vega-actions a {
+      margin-right: 5px;
+    }
+    </style>
+    </head>
+    <body>
+
+    <h3>Live Covid Data Visualization</h3>
+    <p>using Vega-Lite:</p>
+    <br>
+    <!-- the chart will be added to this div element -->
+    <div id = "vis"></div>
+    <div id= "vis2"></div>
+    <script>
+        var vlSpec ={
+            $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+            align: "center",
+            width: 1000,
+            data:{
+                url: "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv",
+                async: true
+            },
+            layer:[
+            {
+                mark: {
+                    type: "line",
+                    strokeSize: 3,
+                    tooltip: true,
+                    color: "#7a7a7a",
+                    opacity: .2
+                },
+                encoding:{
+                    x: {
+                        timeUnit: "yearmonthdate",
+                        field: "date",
+                        type: "ordinal",
+                        title: "Date"
+                    },
+                    y: {
+                        field: "cases",
+                        type: "quantitative",
+                        aggregate: "sum"
+                        }
+                    }
+            },
+            {
+                mark: {
+                    type: "line",
+                    tooltip: true,
+                    color: "red",
+                    opacity: .6
+                },
+                encoding:{
+                    x: {
+                        timeUnit: "yearmonthdate",
+                        field: "date",
+                        type: "ordinal",
+                    },
+                    y: {
+                        field: "cases",
+                        type: "quantitative",
+                        aggregate: "average"
+                        }            
+                    }
+            },
+            ]
+    }
+
+    var vlSpec2 = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        align: "center",
+        width: 1000,
+        data:{
+            url: "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv",
+            async: true
+        },
+        mark:{
+            type: "bar",
+            tooltip: {content:"data"},
+            color: "#7a7a7a",
+            opacity: .3
+        },
+        parameters:[
+            {
+            name: "grid",
+            select: {
+              type: "interval",
+              resolve: "global",
+              translate: "[mousedown[!event.shiftKey], window:mouseup] > window:mousemove!",
+              zoom: "wheel![!event.shiftKey]"
+            },
+            bind: "scales"
+            }   
+        ],
+        encoding:{
+            x: {
+                timeUnit: "yearmonthdate",
+                field: "date",
+                type: "ordinal",
+                title: "Date"
+            },
+            y: {
+                field: "deaths",
+                type: "quantitative"
+                }
+            }
+
+    }
+        vegaEmbed('#vis', vlSpec);
+        vegaEmbed('#vis2', vlSpec2);   
+
+        </script>
+    </body>
+</html>
