@@ -75,6 +75,7 @@ var vlScatter ={
         },
         x:{
             field: "Horsepower",
+            type: "quantitative"
         }
     }
 }
